@@ -5,6 +5,9 @@ import { useRouter } from "next/navigation";
 
 const axios = require("axios");
 
+//PAREI AQUI 
+// esta dando erro no terminal...
+//mas o site funciona de boa
 function createUser(email, senha) {
     let url = 'http://127.0.0.1:5000/task/auth/create';
     let data = {"email": email, "senha": senha};
