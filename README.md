@@ -1,34 +1,69 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Task Block
 
-## Getting Started
+<img src="imagem.png" alt="Exemplo imagem">
 
-First, run the development server:
+> Bloco de tarefas online, bastante intuitivo e de facil uso, cadastre-se e guarde suas atividades.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+>Observação: Projeto de cunho educativo, não guarde senhas ou informações importantes/sensíveis!
+
+
+
+
+## 💻 Pré-requisitos
+
+Antes de começar, verifique se você atendeu aos seguintes requisitos:
+
+* Possui instalado o Node js
+* Compatível com Windows e Linux. Não testado em Mac.
+* Leu o repositório `Task` (API usada no projeto).
+
+## 🚀 Instalando Task Block
+
+Para instalar o Task Block, siga estas etapas:
+
+Linux e Windows:
+```
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## ☕ Usando Task Block
 
-## Learn More
+Para usar Task Block, siga estas etapas:
 
-To learn more about Next.js, take a look at the following resources:
+```
+npm run dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Irá aparecer uma mensagem parecida com essa:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```
+> taskblockv1@0.1.0 dev
+> next dev
 
-## Deploy on Vercel
+- ready started server on [::]:3000, url: http://localhost:3000
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Copie a url e cole no navegador.
+## 🤝 Colaboradores
+
+<table>
+  <tr>
+    <td align="center">
+      <a href="#">
+        <img src="https://avatars3.githubusercontent.com/u/31936044" width="100px;" alt="Foto do Iuri Silva no GitHub"/><br>
+        <sub>
+          <b>José Henrique</b>
+        </sub>
+      </a>
+    </td>
+  </tr>
+</table>
+
+
+
+## 📝 Licença
+
+Esse projeto está sob licença. Veja o arquivo [LICENÇA](LICENSE.md) para mais detalhes.
