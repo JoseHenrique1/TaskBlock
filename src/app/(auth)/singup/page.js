@@ -5,54 +5,45 @@ import { useRouter } from "next/navigation";
 
 const axios = require("axios");
 
+const url = 'http://127.0.0.1:5000/task/auth/create';
+
 //PAREI AQUI 
-// esta dando erro no terminal...
-//mas o site funciona de boa
-function createUser(email, senha) {
-    let url = 'http://127.0.0.1:5000/task/auth/create';
+// funcao saind primiro que outra 
+async function createUser(email, senha) {
     let data = {"email": email, "senha": senha};
-    axios.post(url, data, ()=>{console.log("call back")})
-
-    .then((response)=>
-    {
-            console.log('post sucess')
-
-            console.log(response['data'])
-            console.log(response.status)
-
+    let resposta = "";
+    await axios.post(url, data, ()=>{console.log("call back")})
+    .then((response)=>{
+            resposta = response['data'];
+    })
+    .catch (()=>{
+            resposta = {msg:'erro'}
     })
 
-    .catch (()=>
-    {
-            console.log('erro')
-    })
-    return true; //retorna algo não me lebro se é um bool
+    return resposta;
 }
 
 
 
-export default function Singin() {
+export default function Singup() {
     const [senha, setSenha] = useState("")
     const [email, setEmail] = useState("")
-
+    const [alertsing, setAlertsing] = useState(false)
     const route = useRouter()
 
     
-    
-
-    function Enviar() {
-        let key = createUser(email, senha)
-
-        /*
-        if (key==false) {
-            alert("faltou algo...")
+    async function Enviar() {
+        let key = await createUser(email, senha);
+        
+        if (key.msg == "success") {
+            route.push("/auth/singin");
         }
         else {
-            route.push("/auth/singin")
-        }
-        */
-        
+            alert("error")
+            setAlertsing(true);
+        }    
     }
+    
 
     return (
         <main>
@@ -68,6 +59,12 @@ export default function Singin() {
                 onChange={(e)=>setSenha(e.target.value)}/>
 
             <button onClick={Enviar}>Send</button>
+
+            {alertsing?
+                <p>Campos vazios ou usuário existente!</p>
+                :
+                <></>}
+
         </main>
         
     )
