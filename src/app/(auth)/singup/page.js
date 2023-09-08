@@ -4,21 +4,15 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 const axios = require("axios");
-
 const url = 'http://127.0.0.1:5000/task/auth/create';
 
-//PAREI AQUI 
-// funcao saind primiro que outra 
 async function createUser(email, senha) {
     let data = {"email": email, "senha": senha};
-    let resposta = "";
-    await axios.post(url, data, ()=>{console.log("call back")})
+    let resposta = await axios.post(url, data, ()=>{console.log("call back")})
     .then((response)=>{
-            resposta = response['data'];
-    })
+            return response['data'];})
     .catch (()=>{
-            resposta = {msg:'erro'}
-    })
+            return {msg:'erro'}})
 
     return resposta;
 }
@@ -28,6 +22,8 @@ async function createUser(email, senha) {
 export default function Singup() {
     const [senha, setSenha] = useState("")
     const [email, setEmail] = useState("")
+
+    //caso falhe o singup, irá emitir uma mensagem
     const [alertsing, setAlertsing] = useState(false)
     const route = useRouter()
 
@@ -36,14 +32,14 @@ export default function Singup() {
         let key = await createUser(email, senha);
         
         if (key.msg == "success") {
-            route.push("/auth/singin");
+            route.push("/singin");
         }
         else {
             alert("error")
             setAlertsing(true);
         }    
     }
-    
+
 
     return (
         <main>
@@ -64,7 +60,6 @@ export default function Singup() {
                 <p>Campos vazios ou usuário existente!</p>
                 :
                 <></>}
-
         </main>
         
     )
