@@ -3,8 +3,11 @@ import { createContext, useContext, useState } from "react";
 
 export const GlobalContext = createContext({});
 
+
+
 export const GlobalProvider = ({children}) => {
 
+    const [user, setUser] = useState()
     
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
@@ -27,6 +30,7 @@ export const GlobalProvider = ({children}) => {
     return (
         <GlobalContext.Provider 
             value={{
+                user, setUser,
                 idtask, setIdtask,
                 title, setTitle,
                 description, setDescription,

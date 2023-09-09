@@ -2,32 +2,49 @@
 import Link from "next/link"
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useContext } from "react";
 
-function getUser(email, senha) {
-    return "12345"; //id do user no banco ou um valor NULL caso esteja errado
+import { GlobalContext } from "@/context/GlobalContext";
+
+const axios = require("axios");
+const url = 'http://127.0.0.1:5000/task/auth/connect';
+
+async function getUser(email, senha) {
+    let data = {"email": email, "senha": senha};
+    let resposta = await axios.post(url, data,()=>{console.log('call back')})
+    .then((response)=>{
+            return response['data'];})
+    .catch ((erro)=>{
+            console.log(erro)
+            return {msg:'error'};})
+    console.log("resposta: "+resposta.msg)
+
+    return resposta;
 }
 
 
 
 export default function Singin() {
-    const [senha, setSenha] = useState("")
-    const [email, setEmail] = useState("")
+    const {setUser} = useContext(GlobalContext);
 
-    const route = useRouter()
+    const [senha, setSenha] = useState("");
+    const [email, setEmail] = useState("");
 
-    
-    
+    const [alertsing, setAlertsing] = useState(false);
+    const route = useRouter();
 
-    function Enviar() {
-        let key = getUser(email, senha)
+    async function Enviar() {
+        let key = await getUser(email, senha);
+        console.log('key: '+key.key_user);
 
-        if (key==null) {
+        if (key.msg=='error') {
             alert("senha email errada")
         }
         else {
-            route.push("/home")
+            setUser(key.key_user);
+            route.push("/home");
+            
         }
-        
     }
 
     return (
@@ -44,6 +61,10 @@ export default function Singin() {
                 onChange={(e)=>setSenha(e.target.value)}/>
 
             <button onClick={Enviar}>Send</button>
+            {alertsing?
+                <p>Campos vazios ou email/senha errados!</p>
+                :
+                <></>}
         </main>
         
     )
