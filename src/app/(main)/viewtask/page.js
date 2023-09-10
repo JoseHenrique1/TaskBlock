@@ -2,25 +2,58 @@
 import Link from "next/link"
 import { useState, useContext } from "react";
 
+import { MainContext } from "@/context/MainContext";
 import { GlobalContext } from "@/context/GlobalContext";
 
+const axios = require("axios")
+
+
+
+
+async function patchTask(user, task, title, description) {
+    const url = 'http://127.0.0.1:5000/task/update';
+    let data = {"key_user": user, "key_task": task, "title":title, "description":description};
+    let resposta = await axios.patch(url, data,()=>{console.log('call back')})
+    .then((response)=>{
+            return response['data'];})
+    .catch ((erro)=>{
+            console.log(erro)
+            return {msg:'error'};})
+    return resposta;
+}
 
 export default function Viewtask(){
-    const {idtask, setIdtask, listtask, setListtask} = useContext(GlobalContext);
+    const {idtask, setIdtask, listtask, setListtask} = useContext(MainContext);
+    const {user} = useContext(GlobalContext);
 
-    if (idtask === undefined) {
-        return (<>Você está forçando uma vizualização de uma view! Volte a 'Home' e selecione uma tarefa</>)
+    if ((idtask === undefined)||(idtask === "")) {
+        return (<>Você está forçando uma vizualização de uma view! <br/> Volte a 'Home' e selecione uma tarefa</>)
     }
 
-    const [title, setTitle] = useState(listtask[idtask].title);
-    const [description, setDescription] = useState(listtask[idtask].description);
+    //tentei usar o filtar, mas não funcionou...
+    //criei então o busca item
+    function buscaItem(array, id) {
+        for (let obj of array) {
+            if (obj.id == id) {
+                return obj;
+            }
+        }
+    }
+
+
+    const [title, setTitle] = useState(buscaItem(listtask, idtask).title);
+    const [description, setDescription] = useState(buscaItem(listtask, idtask).description);
 
     
-
-    function save_item() {
+    async function save_item() {
         let lista = listtask;
+        let requisicao = await patchTask(user, idtask, title, description);
+        console.log(requisicao)
+
+        /*
         lista[idtask] = {title: title, description: description};
         setListtask(lista);
+        setIdtask("")*/
     }
 
     return(

@@ -57,7 +57,7 @@ export default function Home() {
           {listtask.map(
             (item, index) =>{
               
-              return <Item key={index} id={item.id} title={item.title} description={item.description} remove={()=>{remove_item(index)}} view={()=>{setIdtask(index)}}/>
+              return <Item key={index} id={item.id} title={item.title} description={item.description} remove={async ()=>{await remove_item(user, item.id), setModificado(true)}} view={()=>{setIdtask(item.id)}}/>
             }
           )}
       </List>

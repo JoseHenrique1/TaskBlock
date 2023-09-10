@@ -31,7 +31,20 @@ async function postTask(user, title, description) {
             console.log(erro)
             return {msg:'error'};})
     return resposta;
-  }
+}
+
+//fazendo requisicao para criar task no banco
+async function deleteTask(user, task) {
+    const url = 'http://127.0.0.1:5000/task/delete';
+    let data = {"data":{"key_user": user, "key_task": task }};
+    let resposta = await axios.delete(url, data,()=>{console.log('call back')})
+    .then((response)=>{
+            return response['data'];})
+    .catch ((erro)=>{
+            console.log(erro)
+            return {msg:'error'};})
+    return resposta;
+}
 
 
 
@@ -51,13 +64,18 @@ export const MainProvider = ({children}) => {
         if (requisicao.msg == "success") {
             setListtask([...listtask, {title:title, description:description}])
 
-            //recarregando lista
-            loadData(user)
         }
     }
 
-    function remove_item (id) {
-        setListtask(listtask.filter((value, index)=> index != id))
+    async function remove_item (user, task) {
+        console.log(user+"-----"+task)
+        let requisicao = await deleteTask(user, task);
+        if (requisicao.msg == "success") {
+            setListtask(listtask.filter((value)=> value.id != user))
+
+        }
+
+        
     }
 
     async function loadData(user) {
