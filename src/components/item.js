@@ -1,5 +1,5 @@
 import Link from "next/link"
-export default function Item({ title, description, remove, view}) {
+export default function Item({ id, title, description, remove, view}) {
     return (
         
         <div>
