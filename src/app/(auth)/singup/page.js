@@ -13,7 +13,6 @@ async function createUser(email, senha) {
             return response['data'];})
     .catch (()=>{
             return {msg:'erro'}})
-
     return resposta;
 }
 
@@ -32,10 +31,10 @@ export default function Singup() {
         let key = await createUser(email, senha);
         
         if (key.msg == "success") {
+            setAlertsing(false);
             route.push("/singin");
         }
         else {
-            alert("error")
             setAlertsing(true);
         }    
     }

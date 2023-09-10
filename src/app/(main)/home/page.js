@@ -1,18 +1,18 @@
 'use client'
-import { useState } from "react";
 import List from "@/components/list";
 import Item from "@/components/item";
-import Link from "next/link";
 
 import { GlobalContext } from "@/context/GlobalContext";
 import { MainContext } from "@/context/MainContext";
-import { useContext } from "react";
-import { useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 
 
 export default function Home() {
-  const {idtask, setIdtask,title, setTitle,  description, setDescription, listtask, setListtask, create_item, remove_item, loadData} = useContext(MainContext);
-  const {user, setUser} = useContext(GlobalContext);
+  const {setIdtask,listtask, create_item, remove_item, loadData} = useContext(MainContext);
+  const {user} = useContext(GlobalContext);
+
+  const [title, setTitle] = useState("")
+  const [description, setDescription] = useState("")
 
   //toda vez que uma task é adiconada, "modificado"
   //passa a ser true e ativa um useeffect para
@@ -21,12 +21,12 @@ export default function Home() {
 
 
   useEffect(()=>{
-    loadData("-NdovfK5LdeE6GGiCRV5")  
+    loadData(user)  
   },[])
 
   useEffect(()=>{
     setModificado(false)
-    loadData("-NdovfK5LdeE6GGiCRV5")  
+    loadData(user)  
   },[modificado])
 
 
@@ -47,10 +47,8 @@ export default function Home() {
         placeholder="Write about your task..."
         value={description} 
         onChange={(e) => {setDescription(e.target.value)}}/>
-      <button onClick={ async ()=>{await create_item(user); await setModificado(true)}}>send</button>
+      <button onClick={ async ()=>{await create_item(user, title, description); await setModificado(true)}}>send</button>
       <br/>
-
-
 
       {listtask.length!=0?
         <List>
@@ -60,10 +58,9 @@ export default function Home() {
               return <Item key={index} id={item.id} title={item.title} description={item.description} remove={async ()=>{await remove_item(user, item.id), setModificado(true)}} view={()=>{setIdtask(item.id)}}/>
             }
           )}
-      </List>
-      :<p>Create your first task!</p>
-      
-    }
+        </List>
+        :<p>Create your first task!</p>
+      }
     </main>
   )
 }

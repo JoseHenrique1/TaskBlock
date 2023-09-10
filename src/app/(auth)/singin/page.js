@@ -1,8 +1,7 @@
 'use client'
 import Link from "next/link"
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useRouter } from "next/navigation";
-import { useContext } from "react";
 
 import { GlobalContext } from "@/context/GlobalContext";
 
@@ -17,8 +16,6 @@ async function getUser(email, senha) {
     .catch ((erro)=>{
             console.log(erro)
             return {msg:'error'};})
-    console.log("resposta: "+resposta.msg)
-
     return resposta;
 }
 
@@ -30,21 +27,25 @@ export default function Singin() {
     const [senha, setSenha] = useState("");
     const [email, setEmail] = useState("");
 
+    //caso falhe o singup, irá emitir uma mensagem
     const [alertsing, setAlertsing] = useState(false);
     const route = useRouter();
 
     async function Enviar() {
-        let key = await getUser(email, senha);
-        console.log('key: '+key.key_user);
-
-        if (key.msg=='error') {
-            alert("senha email errada")
-        }
+        if ((senha==="") || (email==="")) {
+            setAlertsing(true)
+        } 
         else {
-            setUser(key.key_user);
-            route.push("/home");
-            
-        }
+            setAlertsing(false)
+            let key = await getUser(email, senha);
+            if (key.msg=='error') {
+                alert("senha email errada")
+            }
+            else {
+                setUser(key.key_user);
+                route.push("/home");       
+            }
+        }   
     }
 
     return (
@@ -64,7 +65,8 @@ export default function Singin() {
             {alertsing?
                 <p>Campos vazios ou email/senha errados!</p>
                 :
-                <></>}
+                <></>
+            }
         </main>
         
     )

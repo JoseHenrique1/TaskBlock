@@ -1,12 +1,12 @@
 'use client'
 import { createContext, useState } from "react";
 
-
-//nome main é referente a rota...
+//nome main é referente a rota (MAIN)...
 export const MainContext = createContext({});
 
-
 const axios = require('axios')
+
+
 //funcao usada em home para fazer a requisição das tasks
 async function getData(user) {
   const url = 'http://127.0.0.1:5000/task/list';
@@ -51,19 +51,15 @@ async function deleteTask(user, task) {
 
 export const MainProvider = ({children}) => {
 
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
-
     // id da task selecionada para leitura ou edição
     const [idtask, setIdtask] = useState()
-
     const [listtask, setListtask] = useState([])
 
-    async function create_item(user) {
+
+    async function create_item(user, title, description) {
         let requisicao = await postTask(user, title, description);
         if (requisicao.msg == "success") {
             setListtask([...listtask, {title:title, description:description}])
-
         }
     }
 
@@ -72,10 +68,7 @@ export const MainProvider = ({children}) => {
         let requisicao = await deleteTask(user, task);
         if (requisicao.msg == "success") {
             setListtask(listtask.filter((value)=> value.id != user))
-
         }
-
-        
     }
 
     async function loadData(user) {
@@ -99,8 +92,6 @@ export const MainProvider = ({children}) => {
         <MainContext.Provider 
             value={{
                 idtask, setIdtask,
-                title, setTitle,
-                description, setDescription,
                 listtask, setListtask,
                 create_item, 
                 remove_item,

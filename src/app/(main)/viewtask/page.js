@@ -7,9 +7,6 @@ import { GlobalContext } from "@/context/GlobalContext";
 
 const axios = require("axios")
 
-
-
-
 async function patchTask(user, task, title, description) {
     const url = 'http://127.0.0.1:5000/task/update';
     let data = {"key_user": user, "key_task": task, "title":title, "description":description};
@@ -21,6 +18,8 @@ async function patchTask(user, task, title, description) {
             return {msg:'error'};})
     return resposta;
 }
+
+
 
 export default function Viewtask(){
     const {idtask, setIdtask, listtask, setListtask} = useContext(MainContext);
