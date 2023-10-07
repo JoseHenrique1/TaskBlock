@@ -3,6 +3,7 @@ import Link from "next/link"
 import { useState, useContext } from "react";
 import { useRouter } from "next/navigation";
 
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { GlobalContext } from "@/context/GlobalContext";
 
 const axios = require("axios");
@@ -49,24 +50,39 @@ export default function Singin() {
     }
 
     return (
-        <main>
+        <main className="container d-flex flex-column ">
             <Link href="/">Voltar</Link>
             <h1>Login</h1>
-            <input
-                placeholder="email"
-                value={email}
-                onChange={(e)=>setEmail(e.target.value)}/>
-            <input
-                placeholder="senha"
-                value={senha}
-                onChange={(e)=>setSenha(e.target.value)}/>
+            <div className="form-floating mb-3">
+                <input
+                    id="email"
+                    className="form-control"
+                    placeholder="email"
+                    value={email}
+                    onChange={(e)=>setEmail(e.target.value)}/>
+                <label for="email" >Email</label>
+            </div>
+            <div className="form-floating mb-3">
+                <input
+                    id="senha"
+                    className="form-control"
+                    placeholder="senha"
+                    value={senha}
+                    onChange={(e)=>setSenha(e.target.value)}/>
+                <label for="senha" >Senha</label>
+            </div>
 
-            <button onClick={Enviar}>Send</button>
+            <button 
+                className="btn btn-primary"
+                onClick={Enviar}
+            >Send</button>
+
             {alertsing?
-                <p>Campos vazios ou email/senha errados!</p>
-                :
-                <></>
+                    <p>Campos vazios ou email/senha errados!</p>
+                    :
+                    <></>
             }
+            
         </main>
         
     )

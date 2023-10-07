@@ -41,19 +41,34 @@ export default function Singup() {
 
 
     return (
-        <main>
+        <main className="container d-flex flex-column">
             <Link href="/">Voltar</Link>
             <h1>Cadastro</h1>
-            <input
-                placeholder="email"
-                value={email}
-                onChange={(e)=>setEmail(e.target.value)}/>
-            <input
-                placeholder="senha"
-                value={senha}
-                onChange={(e)=>setSenha(e.target.value)}/>
+            <div className="form-floating mb-3">
+                <input
+                    id="email"
+                    className="form-control"
+                    placeholder="email"
+                    value={email}
+                    onChange={(e)=>setEmail(e.target.value)}/>
+                    <label for="email" >Email</label>
+            </div>
 
-            <button onClick={Enviar}>Send</button>
+            <div className="form-floating mb-3">
+                <input
+                    id="senha"
+                    className="form-control"
+                    placeholder="senha"
+                    value={senha}
+                    onChange={(e)=>setSenha(e.target.value)}/>
+                <label for="senha" >Senha</label>
+            </div>
+            
+            
+
+            <button 
+                className="btn btn-primary"
+                onClick={Enviar}>Send</button>
 
             {alertsing?
                 <p>Campos vazios ou usuário existente!</p>
