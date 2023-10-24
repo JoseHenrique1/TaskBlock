@@ -2,6 +2,8 @@
 import Link from "next/link"
 import { useState, useContext } from "react";
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 import { MainContext } from "@/context/MainContext";
 import { GlobalContext } from "@/context/GlobalContext";
 
@@ -56,25 +58,33 @@ export default function Viewtask(){
     }
 
     return(
-        <main>
+        <main className="container">
             <Link href="/home">home</Link>
             <p>viewtask</p>
 
-            <p>Title</p>
-            <input 
+            <div className="mb-3">
+                <label for="title">Title</label>
+                <input 
+                id="title"
+                className="form-control"
                 type="text" 
                 placeholder="What is your task?" 
                 value={title} 
                 onChange={(e) => {setTitle(e.target.value)}}/>
-            <br></br>
-            <br></br>
-            <p>Description</p>
-            <textarea 
+            </div>
+            
+            <div className="mb-3">
+                <label for="description">Description</label>
+                <textarea 
+                id="description"
+                className="form-control"
                 rows={5} 
                 placeholder="Write about your task..."
                 value={description} 
                 onChange={(e) => {setDescription(e.target.value)}}/>
-            <button onClick={save_item}>Save</button>
+            </div>
+
+            <button className="btn btn-primary" onClick={save_item}>Save</button>
             <br/>
         </main>
     )

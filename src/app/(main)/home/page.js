@@ -54,7 +54,6 @@ export default function Home() {
           placeholder="Write about your task..."
           value={description} 
           onChange={(e) => {setDescription(e.target.value)}}/>
-        
       </div>
       
       
