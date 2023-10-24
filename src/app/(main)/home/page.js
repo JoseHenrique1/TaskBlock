@@ -3,12 +3,18 @@ import List from "@/components/list";
 import Item from "@/components/item";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import { useRouter } from "next/navigation";
+
 import { GlobalContext } from "@/context/GlobalContext";
 import { MainContext } from "@/context/MainContext";
 import { useContext, useEffect, useState } from "react";
 
 
 export default function Home() {
+  const route = useRouter();
+  if (!localStorage.getItem("user") || (localStorage.getItem("user")=="") ) {
+    route.push("/")
+  }
   const {setIdtask,listtask, create_item, remove_item, loadData} = useContext(MainContext);
   const {user} = useContext(GlobalContext);
 
@@ -35,7 +41,7 @@ export default function Home() {
   return (
     <main className="container">
       <div className="mb-3">
-        <label for="title">Title</label>
+        <label>Title</label>
         <input 
           id="title"
           className="form-control"
@@ -46,7 +52,7 @@ export default function Home() {
       </div>
         
       <div className="mb-3">
-        <label for="description">Description</label>
+        <label>Description</label>
         <textarea 
           id="description"
           className="form-control"

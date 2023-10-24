@@ -62,7 +62,7 @@ export default function Singin() {
                     placeholder="email"
                     value={email}
                     onChange={(e)=>setEmail(e.target.value)}/>
-                <label for="email" >Email</label>
+                <label htmlFor="email"  >Email</label>
             </div>
             <div className="form-floating mb-3">
                 <input
@@ -71,7 +71,7 @@ export default function Singin() {
                     placeholder="senha"
                     value={senha}
                     onChange={(e)=>setSenha(e.target.value)}/>
-                <label for="senha" >Senha</label>
+                <label htmlFor="senha" >Senha</label>
             </div>
 
             <button 

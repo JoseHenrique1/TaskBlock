@@ -1,6 +1,7 @@
 'use client'
 import Link from "next/link"
 import { useState, useContext } from "react";
+import { useRouter } from "next/navigation";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -24,6 +25,10 @@ async function patchTask(user, task, title, description) {
 
 
 export default function Viewtask(){
+    const route = useRouter();
+    if (!localStorage.getItem("user") || (localStorage.getItem("user")=="") ) {
+        route.push("/")
+    }
     const {idtask, setIdtask, listtask, setListtask} = useContext(MainContext);
     const {user} = useContext(GlobalContext);
 
@@ -63,7 +68,7 @@ export default function Viewtask(){
             <p>viewtask</p>
 
             <div className="mb-3">
-                <label for="title">Title</label>
+                <label htmlFor="title">Title</label>
                 <input 
                 id="title"
                 className="form-control"
@@ -74,7 +79,7 @@ export default function Viewtask(){
             </div>
             
             <div className="mb-3">
-                <label for="description">Description</label>
+                <label  htmlFor="description">Description</label>
                 <textarea 
                 id="description"
                 className="form-control"
