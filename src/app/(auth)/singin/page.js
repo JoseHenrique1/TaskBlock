@@ -44,6 +44,8 @@ export default function Singin() {
             }
             else {
                 setUser(key.key_user);
+                localStorage.setItem("user", key.key_user)
+
                 route.push("/home");       
             }
         }   

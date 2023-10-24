@@ -6,7 +6,8 @@ export const GlobalContext = createContext({});
 export const GlobalProvider = ({children}) => {
 
     //key_user do usuario logado
-    const [user, setUser] = useState("")
+    const [user, setUser] = useState(localStorage.getItem("user") || "")
+    
     
     return (
         <GlobalContext.Provider value={{user, setUser }}>
