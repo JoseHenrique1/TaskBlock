@@ -4,67 +4,76 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 const axios = require("axios");
+const url = 'http://127.0.0.1:5000/task/auth/create';
 
-function createUser(email, senha) {
-    let url = 'http://127.0.0.1:5000/task/auth/create';
+async function createUser(email, senha) {
     let data = {"email": email, "senha": senha};
-    axios.post(url, data, ()=>{console.log("call back")})
-
-    .then((response)=>
-    {
-            console.log('post sucess')
-
-            console.log(response['data'])
-            console.log(response.status)
-
-    })
-
-    .catch (()=>
-    {
-            console.log('erro')
-    })
-    return true; //retorna algo não me lebro se é um bool
+    let resposta = await axios.post(url, data, ()=>{console.log("call back")})
+    .then((response)=>{
+            return response['data'];})
+    .catch (()=>{
+            return {msg:'erro'}})
+    return resposta;
 }
 
 
 
-export default function Singin() {
+export default function Singup() {
     const [senha, setSenha] = useState("")
     const [email, setEmail] = useState("")
 
+    //caso falhe o singup, irá emitir uma mensagem
+    const [alertsing, setAlertsing] = useState(false)
     const route = useRouter()
 
     
-    
-
-    function Enviar() {
-        let key = createUser(email, senha)
-
-        /*
-        if (key==false) {
-            alert("faltou algo...")
+    async function Enviar() {
+        let key = await createUser(email, senha);
+        
+        if (key.msg == "success") {
+            setAlertsing(false);
+            route.push("/singin");
         }
         else {
-            route.push("/auth/singin")
-        }
-        */
-        
+            setAlertsing(true);
+        }    
     }
 
+
     return (
-        <main>
+        <main className="container d-flex flex-column">
             <Link href="/">Voltar</Link>
             <h1>Cadastro</h1>
-            <input
-                placeholder="email"
-                value={email}
-                onChange={(e)=>setEmail(e.target.value)}/>
-            <input
-                placeholder="senha"
-                value={senha}
-                onChange={(e)=>setSenha(e.target.value)}/>
+            <div className="form-floating mb-3">
+                <input
+                    id="email"
+                    className="form-control"
+                    placeholder="email"
+                    value={email}
+                    onChange={(e)=>setEmail(e.target.value)}/>
+                    <label for="email" >Email</label>
+            </div>
 
-            <button onClick={Enviar}>Send</button>
+            <div className="form-floating mb-3">
+                <input
+                    id="senha"
+                    className="form-control"
+                    placeholder="senha"
+                    value={senha}
+                    onChange={(e)=>setSenha(e.target.value)}/>
+                <label for="senha" >Senha</label>
+            </div>
+            
+            
+
+            <button 
+                className="btn btn-primary"
+                onClick={Enviar}>Send</button>
+
+            {alertsing?
+                <p>Campos vazios ou usuário existente!</p>
+                :
+                <></>}
         </main>
         
     )
