@@ -1,6 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-import { ButtonMenu } from "../ButtonMenu";
 import { useRef} from "react";
 import { Button } from "../Button";
 
@@ -27,8 +26,10 @@ export function NavBar() {
   return (
     <nav className="flex flex-col p-2 gap-2 border-b shadow-sm sm:flex-row sm:justify-between">
       <div className="flex justify-between sm:order-2">
-          <ButtonMenu 
-            handleMenuClick={handleMenuClick} />
+          <Button 
+            onClick={handleMenuClick}
+            icon="menu"
+            className="sm:hidden bg-transparent hover:bg-blue-400 active:bg-blue-400"/>
           <Button 
             onClick={handleAuthClick} 
             icon={iconAuth}
