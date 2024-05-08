@@ -1,3 +1,9 @@
+import Cookies from "js-cookie";
+import { useContext } from "react";
+import { alertContext } from "../../contexts/alert";
+
+const API = import.meta.env.VITE_API;
+
 interface taskInterface {
     id: string,
     title: string,
@@ -11,16 +17,48 @@ interface cartProps {
     task: taskInterface
 }
 
+interface colorVariantsInterface {
+    [key: string]: string | undefined
+}
+
+const colorVariants: colorVariantsInterface = {
+    blue: 'bg-blue-600',
+    red: 'bg-red-600',
+    green: 'bg-green-600',
+    orange: 'bg-orange-600',
+}
+
 export function Cart({task}: cartProps) {
+    const {handleNewAlert} = useContext(alertContext)
     const {id,title,description,isFavorite,colorBackground,userId} = task;
+
+    function handleDelete () {
+        const token = Cookies.get("token");
+        let endpoint = `${API}tasks/${id}`
+
+        fetch(endpoint, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json;charset=UTF-8",
+                "token": token!
+            },
+        })
+        .then(data=>data.json())
+        .then((data: taskInterface)=>{
+            //remover esta tasks da lista de tasks
+            handleNewAlert("Task deleted")
+        })
+    }
+
+    const pathIconFavorite = isFavorite? "/icons/star_marked.svg": "/icons/star.svg";
     
-    const pathIconFavorite = isFavorite? "/icons/star_marked.svg": "/icons/star.svg"
+
     return ( 
-        <div className="bg-blue-300 min-h-56 p-2">
+        <div className={`${colorVariants[colorBackground]} min-h-56 p-2`}>
             <div className="flex justify-between">
                 <p>{title}</p>
                 <div className="flex">
-                    <img src="/icons/trash.svg" alt="" />
+                    <img onClick={handleDelete} src="/icons/trash.svg" alt="" />
                     <img src="/icons/edit.svg" alt="" />
                     <img src="/icons/pallete.svg" alt="" />
                     <img src={pathIconFavorite} alt="" />
