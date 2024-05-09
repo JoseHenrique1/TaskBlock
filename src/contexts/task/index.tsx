@@ -26,13 +26,14 @@ interface getDataInterface {
 interface taskValueInterface {
     tasks: Array<taskInterface>,
     setTasks: (tasks: Array<taskInterface>)=>void,
-    handleGetTasks: ()=>void
+    getTasks: ()=>void,
+    deleteTask: (id: string)=>void
 }
 
 export function TaskProvider({children}: taskProps) {
     const [tasks, setTasks] = useState<Array<taskInterface>>([])
 
-    function handleGetTasks () {
+    function getTasks () {
         const token = Cookies.get("token");
         fetch(API+"tasks", {
             method: "GET",
@@ -50,11 +51,32 @@ export function TaskProvider({children}: taskProps) {
         .catch(error=>console.log(error))
     }
 
+    function deleteTask (id: string) {
+        const token = Cookies.get("token");
+        let endpoint = `${API}tasks/${id}`
+
+        fetch(endpoint, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json;charset=UTF-8",
+                "token": token!
+            },
+        })
+        .then(()=>{
+            setTasks((prev)=>prev.filter(task=>task.id!==id))
+        })
+        .catch((error)=>{
+            console.log("erro ao deletar task");
+            console.log(error);
+        })
+    }
+
     return (
         <taskContext.Provider value={{
             tasks,
             setTasks,
-            handleGetTasks
+            getTasks,
+            deleteTask
         }}>
             {children}
         </taskContext.Provider>
