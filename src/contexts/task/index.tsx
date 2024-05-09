@@ -20,14 +20,16 @@ interface taskProps {
 
 interface getDataInterface {
     statusCode: number,
-    tasks: Array<taskInterface>
+    tasks: Array<taskInterface>,
+    task: taskInterface
 }
 
 interface taskValueInterface {
     tasks: Array<taskInterface>,
     setTasks: (tasks: Array<taskInterface>)=>void,
     getTasks: ()=>void,
-    deleteTask: (id: string)=>void
+    deleteTask: (id: string)=>void,
+    createTask: (title:string, description:string, isFavorite:boolean, colorBackground:string)=>void
 }
 
 export function TaskProvider({children}: taskProps) {
@@ -71,12 +73,34 @@ export function TaskProvider({children}: taskProps) {
         })
     }
 
+    function createTask (title:string, description:string, isFavorite:boolean, colorBackground:string) {
+        const token = Cookies.get("token")
+        fetch(API+"tasks", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json;charset=UTF-8",
+                "token": token!
+            },
+            body: JSON.stringify({
+                title,
+                description,
+                isFavorite,
+                colorBackground
+            })
+        })
+        .then(data=>data.json())
+        .then((data: getDataInterface )=>{
+            setTasks(prev=>[...prev, data.task])
+        });
+    }
+
     return (
         <taskContext.Provider value={{
             tasks,
             setTasks,
             getTasks,
-            deleteTask
+            deleteTask,
+            createTask
         }}>
             {children}
         </taskContext.Provider>

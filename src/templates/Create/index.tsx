@@ -1,15 +1,15 @@
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 
 import { Button } from "../../components/Button";
 import { FormField } from "../../components/FormField";
 import { ColorDropdown } from "../../components/ColorDropdown";
+import { taskContext } from "../../contexts/task";
 
-
-const API = import.meta.env.VITE_API;
 
 export function CreateTask() {
+    const {createTask} = useContext(taskContext)
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [favorite, setFavorite] = useState(false);
@@ -25,21 +25,8 @@ export function CreateTask() {
     }, []);
 
     function handleSubmit (e:React.FormEvent<HTMLFormElement>) {
-        const token = Cookies.get("token")
         e.preventDefault();
-        fetch(API+"tasks", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json;charset=UTF-8",
-                "token": token!
-            },
-            body: JSON.stringify({
-                title,
-                description,
-                isFavorite: favorite,
-                colorBackground: color
-            })
-        });
+        createTask(title, description, favorite, color);
         navigate("/dashboard", {replace: true});
     }
 
