@@ -30,13 +30,20 @@ export function CreateTask() {
         navigate("/dashboard", {replace: true});
     }
 
+    function handleReset () {
+        setTitle("");
+        setDescription("");
+        setFavorite(false);
+        setColor("blue")
+    }
+
     return ( 
         <main className="flex-grow flex justify-center px-2 my-2">
             <form className="flex flex-grow max-w-screen-xl flex-col gap-2" onSubmit={handleSubmit}>
                 <div className="flex flex-col gap-3 sm:flex-row-reverse">
                     <div className="flex gap-2 self-end">
                         <Button title="Save" type="submit" icon="save" className="p-1"/>
-                        <Button title="Reset all changes" type="reset" icon="reset" className="p-1"/>
+                        <Button onClick={handleReset} title="Reset all changes" type="reset" icon="reset" className="p-1"/>
                         <ColorDropdown setColor={setColor}/>
                         <Button 
                             onClick={()=>{setFavorite(prev=>!prev)}}
