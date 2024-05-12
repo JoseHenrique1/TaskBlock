@@ -27,7 +27,7 @@ const colorVariants: colorVariantsInterface = {
     orange: 'bg-orange-600',
 }
 
-export function Cart({task}: cartProps) {
+export function Card({task}: cartProps) {
     const {id,title,description, isFavorite, colorBackground} = task;
     const [favorite, setFavorite] = useState(isFavorite);
     const [color, setColor] = useState(colorBackground)

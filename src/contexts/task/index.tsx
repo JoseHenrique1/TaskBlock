@@ -8,7 +8,7 @@ export const taskContext = createContext<taskValueInterface>({} as taskValueInte
 interface taskInterface {
     id: string,
     title: string,
-    description?: string,
+    description: string,
     isFavorite: boolean,
     colorBackground: string,
     userId: string

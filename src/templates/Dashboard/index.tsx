@@ -1,6 +1,6 @@
 import { Button } from "../../components/Button";
 import { FormField } from "../../components/FormField";
-import { ContainerCart } from "../../components/ContainerCart";
+import { ContainerCard } from "../../components/ContainerCard";
 import { useNavigate } from "react-router-dom";
 
 export function Dashboard() {
@@ -16,7 +16,7 @@ export function Dashboard() {
                 <FormField type="text" placeholder="Search for your tasks" />
                 <Button onClick={handleCreateTask} icon="plus">New task</Button>
             </div>
-            <ContainerCart/>
+            <ContainerCard/>
         </main> 
     );
 }
