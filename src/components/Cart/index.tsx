@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { alertContext } from "../../contexts/alert";
 import { taskContext } from "../../contexts/task";
+import { ColorDropdown } from "../ColorDropdown";
 
 interface taskInterface {
     id: string,
@@ -41,6 +42,10 @@ export function Cart({task}: cartProps) {
         updateTask(id,title,description,isNewFavorite,colorBackground)
     }
 
+    function handleSetColor (color: string) {
+        updateTask(id,title,description,isFavorite,color);
+    }
+
     const pathIconFavorite = isFavorite? "/icons/star_marked.svg": "/icons/star.svg";
     
     return ( 
@@ -50,7 +55,7 @@ export function Cart({task}: cartProps) {
                 <div className="flex">
                     <img onClick={handleDeleteTask} src="/icons/trash.svg" alt="" />
                     <img src="/icons/edit.svg" alt="" />
-                    <img src="/icons/pallete.svg" alt="" />
+                    <ColorDropdown setColor={handleSetColor}/>
                     <img onClick={handleSetFavorite} src={pathIconFavorite} alt="" />
                 </div>
             </div>
