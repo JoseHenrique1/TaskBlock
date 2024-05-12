@@ -5,7 +5,7 @@ import { taskContext } from "../../contexts/task";
 interface taskInterface {
     id: string,
     title: string,
-    description?: string,
+    description: string,
     isFavorite: boolean,
     colorBackground: string,
     userId: string
@@ -27,13 +27,18 @@ const colorVariants: colorVariantsInterface = {
 }
 
 export function Cart({task}: cartProps) {
-    const {id,title,description,isFavorite,colorBackground} = task;
+    const {id,title,description, isFavorite,colorBackground} = task;
     const {handleNewAlert} = useContext(alertContext);
-    const {deleteTask} = useContext(taskContext);
+    const {deleteTask, updateTask} = useContext(taskContext);
     
     function handleDeleteTask() {
         deleteTask(id);
         handleNewAlert("Task deleted!");
+    }
+
+    function handleSetFavorite () {
+        let isNewFavorite = !isFavorite;
+        updateTask(id,title,description,isNewFavorite,colorBackground)
     }
 
     const pathIconFavorite = isFavorite? "/icons/star_marked.svg": "/icons/star.svg";
@@ -46,7 +51,7 @@ export function Cart({task}: cartProps) {
                     <img onClick={handleDeleteTask} src="/icons/trash.svg" alt="" />
                     <img src="/icons/edit.svg" alt="" />
                     <img src="/icons/pallete.svg" alt="" />
-                    <img src={pathIconFavorite} alt="" />
+                    <img onClick={handleSetFavorite} src={pathIconFavorite} alt="" />
                 </div>
             </div>
             <div>
