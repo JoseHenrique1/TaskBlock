@@ -111,7 +111,7 @@ export function TaskProvider({children}: taskProps) {
                 colorBackground
             })
         })
-        .then(data=>data.json())
+        /* .then(data=>data.json())
         .then((data: getDataInterface )=>{
             setTasks((prev)=>(prev.map((task)=>{
                     if (task.id === id) {
@@ -119,7 +119,7 @@ export function TaskProvider({children}: taskProps) {
                     }
                     return task
             })))
-        });
+        }); */
 
     }
 

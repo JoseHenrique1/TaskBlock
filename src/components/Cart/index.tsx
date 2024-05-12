@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { alertContext } from "../../contexts/alert";
 import { taskContext } from "../../contexts/task";
 import { ColorDropdown } from "../ColorDropdown";
@@ -28,7 +28,9 @@ const colorVariants: colorVariantsInterface = {
 }
 
 export function Cart({task}: cartProps) {
-    const {id,title,description, isFavorite,colorBackground} = task;
+    const {id,title,description, isFavorite, colorBackground} = task;
+    const [favorite, setFavorite] = useState(isFavorite);
+    const [color, setColor] = useState(colorBackground)
     const {handleNewAlert} = useContext(alertContext);
     const {deleteTask, updateTask} = useContext(taskContext);
     
@@ -38,18 +40,19 @@ export function Cart({task}: cartProps) {
     }
 
     function handleSetFavorite () {
-        let isNewFavorite = !isFavorite;
-        updateTask(id,title,description,isNewFavorite,colorBackground)
+        updateTask(id,title,description,!favorite,colorBackground);
+        setFavorite(prev=>!prev);
     }
 
-    function handleSetColor (color: string) {
-        updateTask(id,title,description,isFavorite,color);
+    function handleSetColor (colorCurrent: string) {
+        updateTask(id,title,description,favorite,colorCurrent);
+        setColor(colorCurrent)
     }
 
-    const pathIconFavorite = isFavorite? "/icons/star_marked.svg": "/icons/star.svg";
+    const pathIconFavorite = favorite? "/icons/star_marked.svg": "/icons/star.svg";
     
     return ( 
-        <div className={`${colorVariants[colorBackground]} min-h-56 p-2`}>
+        <div className={`${colorVariants[color]} min-h-56 p-2`}>
             <div className="flex justify-between">
                 <p>{title}</p>
                 <div className="flex">
