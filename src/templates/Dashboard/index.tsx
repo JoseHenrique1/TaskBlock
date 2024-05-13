@@ -7,7 +7,7 @@ export function Dashboard() {
     const navigate = useNavigate();
 
     function handleCreateTask () {
-        navigate("/dashboard/create")
+        navigate("/create")
     }
 
     return ( 

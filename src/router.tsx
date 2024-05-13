@@ -1,11 +1,13 @@
-import { Routes, Route } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
-import {Home} from './templates/Home/index.tsx';
+import { Alert } from './components/Alert/index.tsx';
+import { CreateTask } from './templates/Create/index.tsx';
+import { Dashboard } from './templates/Dashboard/index.tsx';
+import { Home } from './templates/Home/index.tsx';
 import { Login } from './templates/Login/index.tsx';
 import { Registration } from './templates/Registration/index.tsx';
-import { Alert } from './components/Alert/index.tsx';
-import { Dashboard } from './templates/Dashboard/index.tsx';
-import { CreateTask } from './templates/Create/index.tsx';
+import { Edit } from './templates/Edit/index.tsx';
+
 
 export function Router() {
     return ( 
@@ -16,7 +18,8 @@ export function Router() {
                 <Route path='/login' element={<Login/>}/>
                 <Route path='/registration' element={<Registration/>}/>
                 <Route path='/dashboard' element={<Dashboard/>}/>
-                <Route path='/dashboard/create' element={<CreateTask/>}/>
+                <Route path='/create' element={<CreateTask/>}/>
+                <Route path='/dashboard/:id' element={<Edit/>}/>
             </Routes>
         </div>
      );
