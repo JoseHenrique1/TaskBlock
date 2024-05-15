@@ -30,7 +30,8 @@ interface taskValueInterface {
     getTasks: ()=>void,
     deleteTask: (id: string)=>void,
     createTask: (title:string, description:string, isFavorite:boolean, colorBackground:string)=>void,
-    updateTask: (id: string, title:string, description:string, isFavorite:boolean, colorBackground:string)=>void
+    updateTask: (id: string, title:string, description:string, isFavorite:boolean, colorBackground:string)=>void,
+    getTask: (idTask: string)=> Promise<getDataInterface|null>
 }
 
 export function TaskProvider({children}: taskProps) {
@@ -52,6 +53,22 @@ export function TaskProvider({children}: taskProps) {
             }
         })
         .catch(error=>console.log(error))
+    }
+
+    async function getTask (idTask: string) {
+        let url = API+"tasks/"+idTask;      
+        const token = Cookies.get("token");
+        const req = await fetch(url, {
+            method: "get",
+            headers: {
+                "Content-Type": "application/json",
+                "token": token!
+            }
+        })
+        .then(data=>data.json())
+        .then((data: getDataInterface)=>data)
+        .catch(()=>null);
+        return req;
     }
 
     function deleteTask (id: string) {
@@ -130,7 +147,8 @@ export function TaskProvider({children}: taskProps) {
             getTasks,
             deleteTask,
             createTask,
-            updateTask
+            updateTask,
+            getTask
         }}>
             {children}
         </taskContext.Provider>
