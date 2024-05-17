@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import { PresentationAuth } from "../../components/PresentationAuth";
 import { FormField } from "../../components/FormField";
 import { alertContext } from "../../contexts/alert";
+import { Button } from "../../components/Button";
 
 interface fetchRegistration {
   statusCode:number
@@ -73,11 +74,9 @@ export function Registration() {
                 value={password} 
                 onChange={(e)=>{setPassword(e.target.value)}}/>
 
-            <input 
-                type="submit" 
-                value="Register"/>
+            <Button type="submit">Register</Button>
             
-            <p>Do you have an account? <Link to="/login">Sign in</Link></p>
+            <p>Do you have an account? <Link to="/login" className="text-blue-800">Sign in</Link></p>
         </form>
     </main>
   )

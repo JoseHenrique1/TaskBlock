@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import { PresentationAuth } from "../../components/PresentationAuth";
 import { FormField } from "../../components/FormField";
 import { alertContext } from "../../contexts/alert";
+import { Button } from "../../components/Button";
 
 const API = import.meta.env.VITE_API;
 
@@ -73,10 +74,8 @@ export function Login() {
                 value={password} 
                 onChange={(e)=>{setPassword(e.target.value)}}/>
 
-            <input 
-                type="submit" 
-                value="Enter"/>
-            <p>Don't have an account? <Link to="/registration">Register</Link></p>     
+            <Button type="submit">Enter</Button>
+            <p>Don't have an account? <Link to="/registration" className="text-blue-800">Register</Link></p>     
         </form>
     </main>
   )
