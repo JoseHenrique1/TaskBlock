@@ -2,6 +2,8 @@ import { Button } from "../../components/Button";
 import { FormField } from "../../components/FormField";
 import { ContainerCard } from "../../components/ContainerCard";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
+import { useEffect } from "react";
 
 export function Dashboard() {
     const navigate = useNavigate();
@@ -9,6 +11,14 @@ export function Dashboard() {
     function handleCreateTask () {
         navigate("/create")
     }
+
+    useEffect(()=>{
+        const token = Cookies.get("token");
+        if (!token) {
+          navigate("/login");
+          return;
+        }
+    })
 
     return ( 
         <main className="flex-grow px-2 space-y-2 mt-2">
