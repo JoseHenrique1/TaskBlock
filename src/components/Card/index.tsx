@@ -67,7 +67,7 @@ export function Card({ task }: cartProps) {
                 <div className="flex">
                     <img className="cursor-pointer" onClick={openDialog} src="/icons/trash.svg" alt="" />
                     <Link to={"/dashboard/" + id}><img src="/icons/edit.svg" alt="" /></Link>
-                    <ColorDropdown setColor={handleSetColor} />
+                    <ColorDropdown transparent setColor={handleSetColor} />
                     <img className="cursor-pointer" onClick={handleSetFavorite} src={pathIconFavorite} alt="" />
                 </div>
             </div>
