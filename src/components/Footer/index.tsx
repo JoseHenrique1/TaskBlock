@@ -3,7 +3,7 @@ export function Footer() {
     <footer
         className="flex justify-center w-full border-t p-2"
     >
-        Developed for José Henrique
+        Developed by José Henrique
     </footer>
   )
 }

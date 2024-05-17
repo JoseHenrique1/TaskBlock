@@ -24,7 +24,7 @@ export function Dashboard() {
 
     return ( 
         <main className="flex-grow px-2 space-y-2 mt-2">
-            <div className="flex flex-col-reverse gap-2 items-center sm:flex-row sm:justify-between">
+            <div className="flex flex-col-reverse gap-2 items-center max-w-screen-xl lg:mx-auto lg:my-0 sm:flex-row sm:justify-between">
                 <FormField value={search} onChange={(e)=>setSearch(e.target.value)} type="text" placeholder="Search for your tasks" />
                 <Button onClick={handleCreateTask} icon="plus">New task</Button>
             </div>
