@@ -36,13 +36,8 @@ export function NavBar() {
           >{nameAuth}</Button>
       </div>
       <div ref={navLinks} className="hidden flex-col sm:flex sm:flex-row sm:order-1 sm:gap-2">
-          <Link to="/">Home</Link>
-          {
-            token && <>
-              <Link to="/dashboard">Dasboard</Link>
-              <Link to="/">Profile</Link>
-            </>
-          }
+          <Link className="hover:text-blue-800" to="/">Home</Link>
+          {token && <Link className="hover:text-blue-800" to="/dashboard">Dasboard</Link>}
       </div>
     </nav>
   )
