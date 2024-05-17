@@ -1,12 +1,12 @@
 import { Route, Routes } from 'react-router-dom';
 
 import { Alert } from './components/Alert/index.tsx';
-import { CreateTask } from './templates/Create/index.tsx';
-import { Dashboard } from './templates/Dashboard/index.tsx';
-import { Home } from './templates/Home/index.tsx';
-import { Login } from './templates/Login/index.tsx';
-import { Registration } from './templates/Registration/index.tsx';
-import { Edit } from './templates/Edit/index.tsx';
+import { CreateTask } from './pages/Create/index.tsx';
+import { Dashboard } from './pages/Dashboard/index.tsx';
+import { Home } from './pages/Home/index.tsx';
+import { Login } from './pages/Login/index.tsx';
+import { Registration } from './pages/Registration/index.tsx';
+import { Edit } from './pages/Edit/index.tsx';
 
 
 export function Router() {
