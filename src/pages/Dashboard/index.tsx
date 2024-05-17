@@ -3,9 +3,11 @@ import { FormField } from "../../components/FormField";
 import { ContainerCard } from "../../components/ContainerCard";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export function Dashboard() {
+    const [search, setSearch] = useState("")
+
     const navigate = useNavigate();
 
     function handleCreateTask () {
@@ -23,10 +25,10 @@ export function Dashboard() {
     return ( 
         <main className="flex-grow px-2 space-y-2 mt-2">
             <div className="flex flex-col-reverse gap-2 items-center sm:flex-row sm:justify-between">
-                <FormField type="text" placeholder="Search for your tasks" />
+                <FormField value={search} onChange={(e)=>setSearch(e.target.value)} type="text" placeholder="Search for your tasks" />
                 <Button onClick={handleCreateTask} icon="plus">New task</Button>
             </div>
-            <ContainerCard/>
+            <ContainerCard search={search}/>
         </main> 
     );
 }
