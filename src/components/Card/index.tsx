@@ -1,7 +1,8 @@
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { alertContext } from "../../contexts/alert";
 import { taskContext } from "../../contexts/task";
 import { ColorDropdown } from "../ColorDropdown";
+import { Button } from "../Button";
 import { Link } from "react-router-dom";
 
 interface taskInterface {
@@ -31,10 +32,17 @@ const colorVariants: colorVariantsInterface = {
 export function Card({ task }: cartProps) {
     const { id, title, description, isFavorite, colorBackground } = task;
     const [favorite, setFavorite] = useState(isFavorite);
-    const [color, setColor] = useState(colorBackground)
+    const [color, setColor] = useState(colorBackground);
+    const dialog = useRef<HTMLDialogElement>(null)
     const { handleNewAlert } = useContext(alertContext);
     const { deleteTask, updateTask } = useContext(taskContext);
 
+    function openDialog () {
+        dialog.current?.showModal();
+    }
+    function closeDialog () {
+        dialog.current?.close();
+    }
     function handleDeleteTask() {
         deleteTask(id);
         handleNewAlert("Task deleted!");
@@ -57,7 +65,7 @@ export function Card({ task }: cartProps) {
             <div className="flex justify-between">
                 <p>{title}</p>
                 <div className="flex">
-                    <img onClick={handleDeleteTask} src="/icons/trash.svg" alt="" />
+                    <img onClick={openDialog} src="/icons/trash.svg" alt="" />
                     <Link to={"/dashboard/" + id}><img src="/icons/edit.svg" alt="" /></Link>
                     <ColorDropdown setColor={handleSetColor} />
                     <img onClick={handleSetFavorite} src={pathIconFavorite} alt="" />
@@ -68,6 +76,19 @@ export function Card({ task }: cartProps) {
                     {description}
                 </p>
             </div>
+            <dialog 
+                ref={dialog} 
+                className="backdrop:bg-black/15 bg-transparent  max-h-96  p-2"
+                >
+                <div className="flex flex-col gap-6 p-6 bg-white shadow-md shadow-black/50 rounded">
+                    <p className="text-xl">Confirm deletion of "{title}".</p>
+                    <div className="inline-flex gap-4">
+                        <Button className="text-sm px-4 py-2" onClick={closeDialog}>Cancel</Button>
+                        <Button className="text-sm px-4 py-2" onClick={handleDeleteTask}>Confirm</Button>
+                    </div>   
+                </div>
+            </dialog>
+            
         </div>
     );
 }
