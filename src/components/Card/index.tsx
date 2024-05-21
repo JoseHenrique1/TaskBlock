@@ -63,7 +63,7 @@ export function Card({ task }: cartProps) {
     return (
         <div className={`${colorVariants[color]} min-h-56 p-2`}>
             <div className="flex justify-between">
-                <p>{title}</p>
+                <p className="font-medium">{title.slice(0,20)}</p>
                 <div className="flex">
                     <img className="cursor-pointer" onClick={openDialog} src="/icons/trash.svg" alt="" />
                     <Link to={"/dashboard/" + id}><img src="/icons/edit.svg" alt="" /></Link>
@@ -73,7 +73,7 @@ export function Card({ task }: cartProps) {
             </div>
             <div>
                 <p className="break-words">
-                    {description}
+                    {description.slice(0,220)}
                 </p>
             </div>
             <Modal 
