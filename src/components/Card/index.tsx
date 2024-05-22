@@ -78,7 +78,7 @@ export function Card({ task }: cartProps) {
             </div>
             <Modal 
                 dialog={dialog} 
-                title={title} 
+                title={title.slice(0,20)} 
                 closeDialog={closeDialog} 
                 handleDeleteTask={handleDeleteTask} 
             />
